@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CloudNotes{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a class="brand" href="/">
+            <span class="brand-icon">☁</span>
+            CloudNotes
+        </a>
+
+        <span class="nav-subtitle">Your notes, securely stored</span>
+
+        {% if session.get('uid') %}
+        <div class="profile-area">
+            <button type="button" id="profile-toggle" class="profile-avatar" aria-label="Open profile menu"
+                aria-expanded="false" aria-controls="profile-menu">
+                U
+            </button>
+
+            <div id="profile-menu" class="profile-menu" hidden>
+                <div class="profile-menu-heading">Google Drive-style profile</div>
+                <div class="profile-avatar profile-avatar-large" id="profile-large-avatar">U</div>
+                <p class="profile-greeting">Signed in to CloudNotes</p>
+                <p id="profile-email" class="profile-email">Loading account...</p>
+
+                <form action="{{ url_for('logout') }}" method="POST">
+                    <button type="submit" class="profile-logout">
+                        Log out
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </nav>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+        <div class="message {{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>CloudNotes · Cloud-Based Notes and File Storage System</footer>
+
+    {% if session.get('uid') %}
+    <script type="module" src="{{ url_for('static', filename='js/profile.js') }}"></script>
+    {% endif %}
+</body>
+
+</html>

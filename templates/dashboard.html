@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | CloudNotes{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>My CloudNotes</h1>
+    <p>Create and manage your personal notes and files.</p>
+</div>
+
+<!-- Create Notes -->
+<section class="auth-card">
+    <h2 id="form-heading">Create a Note</h2>
+
+    <form id="note-form">
+        <label for="note-title">Note Title</label>
+        <input type="text" id="note-title" maxlength="150" placeholder="Enter note title" required>
+
+        <label for="note-content">Note Content</label>
+        <textarea id="note-content" rows="6" placeholder="Write your note here..." required></textarea>
+
+        <p id="note-message" role="status"></p>
+
+        <button type="submit" id="save-button">Save Note</button>
+
+        <button type="button" id="cancel-edit" hidden>
+            Cancel Edit
+        </button>
+    </form>
+</section>
+
+<!-- Saved Notes -->
+
+<!-- Saved Notes -->
+<section class="notes-section">
+    <h2>My Saved Notes</h2>
+
+    <label for="note-search">Search notes</label>
+    <input type="search" id="note-search" placeholder="Search by title or content..." autocomplete="off">
+
+    <label for="note-filter">Filter notes</label>
+    <select id="note-filter">
+        <option value="all">All Notes</option>
+        <option value="pinned">Pinned Notes</option>
+        <option value="favorites">Favorite Notes</option>
+    </select>
+
+    <p id="loading-message">Loading your notes...</p>
+    <div id="notes-list" class="notes-grid"></div>
+</section>
+
+
+<!-- File Storage -->
+<section class="auth-card files-section">
+    <h2>My Files</h2>
+    <p>Upload and manage your documents.</p>
+
+    <form id="file-form">
+        <label for="file-input">Choose a file</label>
+
+        <input type="file" id="file-input" name="file"
+            accept=".pdf,.txt,.csv,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx,.ppt,.pptx" required>
+
+        <button type="submit" id="upload-button">
+            Upload File
+        </button>
+    </form>
+
+    <p id="file-message" role="status"></p>
+    <p id="file-loading">Loading your files...</p>
+
+    <div id="files-list" class="files-list"></div>
+</section>
+
+<!-- Logout -->
+<form action="{{ url_for('logout') }}" method="POST" class="logout-form">
+    <button type="submit" class="logout-button">Logout</button>
+</form>
+
+<!-- JavaScript -->
+<script src="{{ url_for('static', filename='js/notes.js') }}" defer></script>
+
+<script src="{{ url_for('static', filename='js/files.js') }}" defer></script>
+
+{% endblock %}
+```
